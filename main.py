@@ -16,31 +16,11 @@ def read_root():
 def greet(name: str):
     return {"message": f"Hello, {name}!"}
 
-@app.get("/mt5/XAU_H1/{name}")
-def getXAUDATA(name: str):
-    if not name:
-        name = 'test_name'
+@app.get("/mt5/{symbol}/{data_frame}")
+def read_params(symbol: str = 'symbol', data_frame: str = None, serverTime: str = None):
+    print(f"Received parameters - symbol: {symbol}, data_frame: {data_frame}, serverTime: {serverTime}")
     return {
-        'key': "test",
-        "value": name
+        "symbol": symbol,
+        "serverTime": serverTime,
+        "data_frame": data_frame
     }
-
-@app.post(CONFIG['test'])
-def postTestData(msg: m.TestRequest):
-    print('msg = ', msg)
-    return {
-        'code': 201,
-        'message': 'success'
-    }
-
-@app.post('/mt5/XAU_H1')
-def postXAUData(item: Item):
-    if not item:
-        print("no request body")
-    
-    print('item = ', item)
-    return {
-        'code': 201,
-        'message': 'success'
-    }
-
